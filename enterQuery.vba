@@ -4,8 +4,6 @@ Function enterQuery(fName As String, sqlStr As String)
         Dim rs As New ADODB.Recordset
         Dim connStr As String
         Dim providerStr As String
-        'Dim sqlStr As String
-        'Dim connStr As String
         Dim fields() As Variant
         Dim arrLen As Integer
         Dim vLen As Integer
@@ -23,9 +21,6 @@ Function enterQuery(fName As String, sqlStr As String)
             .Open
         End With
         
-        'sqlStr = "SELECT 'First Name','Last Name', 'Email Address', City FROM Students"
-        'sqlStr = "SELECT [First Name], [Last Name], [E-mail Address], City FROM Students"
-
         rs.Open sqlStr, cn
         
         see = rs.GetString
