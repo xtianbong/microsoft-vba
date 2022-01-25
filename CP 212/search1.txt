@@ -1,0 +1,78 @@
+Option Explicit
+
+Sub search0()
+    Range("H1:J1").Font.Bold = True
+    Range("H1:J1").Font.Color = vbRed
+    Range("H1:J1").Font.Italic = True
+    
+    'data list
+    Dim data0(120) As String
+    Dim data1(120) As String
+    Dim data2(120) As String
+    Dim cell As Range
+ 
+    Dim count As Integer
+    count = 0
+    
+    For Each cell In Worksheets("Data").Range("A2:A122")
+        data0(count) = cell.Value
+        count = count + 1
+    Next
+    
+    count = 0
+    
+    For Each cell In Worksheets("Data").Range("B2:B122")
+        data1(count) = cell.Value
+        count = count + 1
+    Next
+    
+    count = 0
+    
+    For Each cell In Worksheets("Data").Range("C2:C122")
+        data2(count) = CStr(cell.Value)
+        count = count + 1
+    Next
+    count = 0
+    
+    'search lists
+    Dim search0(4) As String
+    Dim search1(4) As String
+    
+    For Each cell In Worksheets("Data").Range("E2:E6")
+        search0(count) = cell.Value
+        count = count + 1
+    Next
+    count = 0
+    
+    For Each cell In Worksheets("Data").Range("F2:F6")
+        search1(count) = cell.Value
+        count = count + 1
+    Next
+    count = 0
+    
+    'search algo
+    Dim n As Integer
+    Dim result(120, 2) As String
+    'Dim result1(120) As String
+    'Dim result2(120) As String
+    For n = 0 To 120
+        Dim r As Integer
+        For r = 0 To 4
+            If data0(n) = search0(r) And data1(n) = search1(r) Then
+                result(count, 0) = data0(n)
+                result(count, 1) = data1(n)
+                result(count, 2) = data2(n)
+                count = count + 1
+            ElseIf search0(r) = "" And search1(r) = data1(n) Then
+                result(count, 0) = data0(n)
+                result(count, 1) = data1(n)
+                result(count, 2) = data2(n)
+                count = count + 1
+            End If
+        Next
+    Next
+    
+    'Worksheets("test").Range("A2:C122") = data
+    Worksheets("Data").Range("H2:J122") = result
+    
+End Sub

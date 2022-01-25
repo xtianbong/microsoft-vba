@@ -1,0 +1,70 @@
+Option Explicit
+
+Sub task()
+    Range("H1:J1").Font.Bold = True
+    Range("H1:J1").Font.Color = vbRed
+    Range("H1:J1").Font.Italic = True
+    
+    'data list
+    Dim data(120, 2) As String
+    Dim cell As Range
+ 
+    Dim count As Integer
+    count = 0
+    
+    For Each cell In Worksheets("Data").Range("A2:A122")
+        data(count, 0) = cell.Value
+        count = count + 1
+    Next
+    
+    count = 0
+    
+    For Each cell In Worksheets("Data").Range("B2:B122")
+        data(count, 1) = cell.Value
+        count = count + 1
+    Next
+    
+    count = 0
+    
+    For Each cell In Worksheets("Data").Range("C2:C122")
+        data(count, 2) = CStr(cell.Value)
+        count = count + 1
+    Next
+    count = 0
+    
+    'search lists
+    Dim search0(4, 1) As String
+    
+    For Each cell In Worksheets("Data").Range("E2:E6")
+        search0(count, 0) = cell.Value
+        count = count + 1
+    Next
+    count = 0
+    
+    For Each cell In Worksheets("Data").Range("F2:F6")
+        search0(count, 1) = cell.Value
+        count = count + 1
+    Next
+    count = 0
+    
+    Dim sRow As Variant 'search row
+    Dim dRow As Variant 'data row
+    Dim sDestination As String
+    Dim sOrigin As String
+    Dim sNumber As String
+    Dim results(120, 2) As String
+    For Each sRow In search0
+        'sOrigin = row(0)
+        'sDestination = row(1)
+        'sNumber = row(2)
+        For Each dRow In data
+            If dRow(0) = sRow(0) And dRow(1) = sRow(1) And dRow(2) = sRow(2) Then
+                results(count) = sRow
+                count = count + 1
+            End If
+        Next
+    Next
+    
+    'Worksheets("test").Range("A2:C122") = data
+    
+End Sub

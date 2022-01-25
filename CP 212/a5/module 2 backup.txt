@@ -1,0 +1,56 @@
+Option Explicit
+
+Sub readEnrolment()
+    Dim fName As String
+    Dim fNum As Integer
+    Dim sLine As String
+    Dim listLine() As String
+    Dim n As Long
+    Dim i As Long
+    
+    Dim cn As New ADODB.Connection
+    Dim rs As New ADODB.Recordset
+    Dim connStr As String
+    Dim providerStr As String
+    Dim sqlStr As String
+    Dim dName As String
+    
+    dName = "Students.accdb"
+    connStr = "Data Source=" & dName
+    providerStr = "Microsoft.ACE.OLEDB.12.0"
+    With cn
+        .ConnectionString = connStr
+        .Provider = providerStr
+        .Open
+    End With
+    
+    
+
+
+    sqlStr = "SELECT * FROM Enrolments"
+    rs.Open sqlStr, cn, , adLockBatchOptimistic
+    With rs
+        For i = 1 To 1023
+                .AddNew
+                .Fields(0).Value = i
+                .Update
+        Next
+    End With
+        
+    
+    fName = "enrolments.dat"
+    fNum = FreeFile
+    Open fName For Input Access Read As #fNum
+    n = 0
+    Do Until EOF(fNum)
+        n = n + 1
+        Line Input #fNum, sLine
+        listLine = Split(sLine, vbTab, -1)
+        'For i = LBound(listLine) To UBound(listLine)
+        '    Application.ActiveSheet.Range("A1").Offset(n - 1, i) = listLine(i)
+        'Next
+        rs.AddNew
+        rs("StudentID") = listLine(0)
+        rs("CRN") = listLine(1)
+    Loop
+End Sub
